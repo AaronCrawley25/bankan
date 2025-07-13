@@ -38,19 +38,19 @@ export default async function BoardDisplayPage({
         .where(eq(listsTable.board, board.id));
 
     return (
-        <div className="h-full flex flex-col">
-            <div className="flex-initial flex justify-between">
+        <>
+            <div className="flex justify-between">
                 <h1 className="text-3xl">{board.title}</h1>
                 <CreateListButton board={board} />
             </div>
-            <ScrollArea className="grow flex-auto my-2">
-                <div className="h-full flex flex-row *:mx-2 w-max">
+            <ScrollArea className="my-2">
+                <div className="flex flex-row *:mx-2 w-max">
                     {lists.map(async (list) => {
                         return <ListArea list={list} />;
                     })}
                 </div>
                 <ScrollBar orientation="horizontal" />
             </ScrollArea>
-        </div>
+        </>
     );
 }

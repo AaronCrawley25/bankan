@@ -14,17 +14,13 @@ export default async function ListArea(props: { list: List }) {
         .where(eq(cardsTable.list, props.list.id));
 
     return (
-        <ScrollArea className="h-full flex flex-col rounded-md border w-80 overflow-x-auto overflow-y-auto p-5 *:my-1 mb-5">
+        <ScrollArea className="h-full rounded-md border w-80 overflow-x-auto p-5 *:my-1">
             <h2 className="text-xl">{props.list.title}</h2>
             <CreateCardButton list={props.list} />
 
-            <ScrollArea className="grow flex-auto my-2">
-                <div className="flex flex-col gap-y-2">
-                    {cards.map((card) => {
-                        return <CardCard card={card} key={card.id} />;
-                    })}
-                </div>
-            </ScrollArea>
+            {cards.map((card) => {
+                return <CardCard card={card} key={card.id} />;
+            })}
 
             <ScrollBar orientation="vertical" />
         </ScrollArea>
