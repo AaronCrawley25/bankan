@@ -14,5 +14,5 @@ export async function createList(board: Board) {
         title: `List: ${listUUID.slice(0, 8)}`,
     });
 
-    revalidatePath(`/boards/${board.id}`);
+    revalidatePath(`/boards/[uuid]`, "page");
 }

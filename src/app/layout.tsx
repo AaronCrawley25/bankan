@@ -27,7 +27,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}
+                className={`${robotoSans.variable} ${robotoMono.variable} antialiased h-dvh flex flex-col`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -35,7 +35,9 @@ export default function RootLayout({
                     enableSystem
                 >
                     <Navbar />
-                    <main className="px-4">{children}</main>
+                    <main className="px-4 grow flex-auto h-full">
+                        {children}
+                    </main>
                 </ThemeProvider>
             </body>
         </html>

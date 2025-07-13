@@ -2,7 +2,8 @@
 
 import { db } from "@/db/drizzle";
 import { cardsTable } from "@/db/schema";
-import { List } from "@/types/schema";
+import { Card, List } from "@/types/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function createCard(list: List) {
@@ -14,5 +15,11 @@ export async function createCard(list: List) {
         title: `Card: ${cardUUID.slice(0, 8)}`,
     });
 
-    revalidatePath(`/boards/${list.board}`);
+    revalidatePath(`/boards/[uuid]`, "page");
+}
+
+export async function deleteCard(card: Card) {
+    await db.delete(cardsTable).where(eq(cardsTable.id, card.id));
+
+    revalidatePath("/boards/[uuid]", "page");
 }

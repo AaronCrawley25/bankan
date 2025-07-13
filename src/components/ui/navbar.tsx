@@ -9,7 +9,7 @@ import { Settings } from "lucide-react";
 
 export default function Navbar() {
     return (
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-initial">
             <NavigationMenu className="p-4">
                 <NavigationMenuList>
                     <NavigationMenuItem>

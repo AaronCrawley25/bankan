@@ -1,5 +1,7 @@
+import { ScrollArea, ScrollBar } from "@/components/ui-lib/scroll-area";
 import CreateCardButton from "@/components/ui/CreateCardButton";
 import CreateListButton from "@/components/ui/CreateListButton";
+import ListArea from "@/components/ui/ListArea";
 import { db } from "@/db/drizzle";
 import { boardsTable, cardsTable, listsTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -36,30 +38,19 @@ export default async function BoardDisplayPage({
         .where(eq(listsTable.board, board.id));
 
     return (
-        <>
-            <div className="flex justify-between">
+        <div className="h-full flex flex-col">
+            <div className="flex-initial flex justify-between">
                 <h1 className="text-3xl">{board.title}</h1>
                 <CreateListButton board={board} />
             </div>
-            {lists.map(async (list) => {
-                const cards = await db
-                    .select()
-                    .from(cardsTable)
-                    .where(eq(cardsTable.list, list.id));
-
-                return (
-                    <details key={list.id}>
-                        <summary>{list.title}</summary>
-                        {cards.map((card) => {
-                            return <p key={card.id}>{card.title}</p>;
-                        })}
-                        <CreateCardButton
-                            boardUUID={board.id}
-                            listUUID={list.id}
-                        />
-                    </details>
-                );
-            })}
-        </>
+            <ScrollArea className="grow flex-auto my-2">
+                <div className="h-full flex flex-row *:mx-2 w-max">
+                    {lists.map(async (list) => {
+                        return <ListArea list={list} />;
+                    })}
+                </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+        </div>
     );
 }
